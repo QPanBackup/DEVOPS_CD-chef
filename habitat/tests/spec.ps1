@@ -17,8 +17,7 @@ try {
     $gemPath = $pkgEnv | Where-Object { $_.StartsWith("`$env:GEM_PATH=") }
     SETX GEM_PATH $($gemPath.Split("=")[1]) /m
 
-    hab pkg binlink --force $PackageIdentifier
-    /hab/bin/rspec --format progress --tag ~executables --tag ~choco_installed spec/functional
+    hab pkg exec rspec -r rspec_junit_formatter -f RspecJunitFormatter -o test.xml -f documentation --tag ~executables --tag ~choco_installed spec/functional
     if (-not $?) { throw "functional testing failed"}
 } finally {
     Pop-Location

@@ -28,4 +28,4 @@ for executable in 'chef-client' 'ohai' 'chef-shell' 'chef-apply' 'knife' 'chef-s
 done
 
 echo "--- :mag_right: Testing ${pkg_ident} functionality"
-pkg_ident="$pkg_ident" hab pkg exec ${pkg_ident} rspec --format progress --tag ~executables spec/functional || error 'failures during rspec tests'
+pkg_ident="$pkg_ident" hab pkg exec ${pkg_ident} rspec -r rspec_junit_formatter -f RspecJunitFormatter -o test.xml -f documentation spec/functional || error 'failures during rspec tests'
